@@ -1,5 +1,5 @@
 
-<?php    include "database.php"; ?>
+<?php   include "database.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,16 +21,29 @@
     <label name="password">Password</label>
     <input type="password" name="password"></input>
     <br>
-    <input type="submit"></input>
+    <input type="submit" name="submit"></input>
     </form>    
 
     <?php
-     $username  = $_POST["username"];
+    if(isset($_POST["submit"])){
+        $username  = $_POST["username"];
      $password  = $_POST["password"];
       if($username == "" || $password == ""){
         die("Username or password cant be null!");
      }
      echo "{$username} is the name and password is {$password}" ;
+     $conn = mysqli_connect($db_server, $db_user,$db_pass,$db_name);
+
+     $sql = "INSERT INTO `study` (`id`, `username`, `password`) VALUES (NULL, '$username' , '$password')";
+     if (mysqli_query($conn, $sql)) {
+        echo "Data inserted successfully ✅";
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+
+    }
+     
+
 
     
 
